@@ -17,6 +17,10 @@ class Dataset(object):
         np.random.shuffle(perm)
         self._images = self._images[perm]
 
+        print("THESE ARE THE IMAGE SHAPES")
+        print(self._images.shape)
+        sys.exit(0)
+
 
     @property
     def images(self):
