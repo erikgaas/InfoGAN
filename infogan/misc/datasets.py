@@ -7,7 +7,7 @@ import sys
 
 class Dataset(object):
     def __init__(self, images, labels=None):
-        self._images = images.reshape(images.shape[0], -1)
+        #self._images = images.reshape(images.shape[0], -1)
         self._labels = labels
         self._epochs_completed = -1
         self._num_examples = images.shape[0]
@@ -16,8 +16,7 @@ class Dataset(object):
         perm = np.arange(self._num_examples)
         np.random.shuffle(perm)
         self._images = self._images[perm]
-        print("THESE ARE THE IMAGE SHAPES")
-        print(self._images.shape)
+
 
     @property
     def images(self):
