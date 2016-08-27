@@ -7,7 +7,7 @@ import sys
 
 class Dataset(object):
     def __init__(self, images, labels=None):
-        #self._images = images.reshape(images.shape[0], -1)
+        self._images = images#.reshape(images.shape[0], -1)
         self._labels = labels
         self._epochs_completed = -1
         self._num_examples = images.shape[0]
