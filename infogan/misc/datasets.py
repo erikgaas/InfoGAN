@@ -17,10 +17,6 @@ class Dataset(object):
         np.random.shuffle(perm)
         self._images = self._images[perm]
 
-        print("THESE ARE THE IMAGE SHAPES")
-        print(self._images.shape)
-        sys.exit(0)
-
 
     @property
     def images(self):
@@ -57,6 +53,9 @@ class Dataset(object):
             assert batch_size <= self._num_examples
         end = self._index_in_epoch
         if self._labels is None:
+            print('Returned batch size.')
+            print(self._images[start:end].shape)
+            sys.exit(0)
             return self._images[start:end], None
         else:
             return self._images[start:end], self._labels[start:end]
