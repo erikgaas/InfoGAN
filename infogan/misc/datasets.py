@@ -12,6 +12,9 @@ class Dataset(object):
         self._num_examples = images.shape[0]
         # shuffle on first run
         self._index_in_epoch = self._num_examples
+        perm = np.arange(self._num_examples)
+        np.random.shuffle(perm)
+        self._images = self._images[perm]
 
     @property
     def images(self):
@@ -90,15 +93,17 @@ class HeartDataset(object):
     def __init__(self):
         data_directory = "Heart"
 
-        dataset = GET_HEART_DATA
-        self.train, self.validation, self.test = dataset.train_test_split....
+        dataset = np.load('/scratch/gaas0012/calc/all_pics.npy')
+        #self.train, self.validation, self.test = dataset.train_test_split....
 
-        rnd_state = np.random.get_state()
-        np.random.seed(0)
-        sself.supervised_train = Dataset(self.train)
+        # rnd_state = np.random.get_state()
+        # np.random.seed(0)
+        # self.supervised_train = Dataset(self.train)
 
         self.imge_dim = 128 * 128
         self.image_dim = (128, 128, 1)
+
+        self.train = Dataset(dataset)
 
     def transform(self, data):
         return data

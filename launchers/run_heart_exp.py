@@ -4,7 +4,7 @@ from infogan.misc.distributions import Uniform, Categorical, Gaussian, MeanBerno
 
 import tensorflow as tf
 import os
-from infogan.misc.datasets import MnistDataset
+from infogan.misc.datasets import HeartDataset
 from infogan.models.regularized_gan import RegularizedGAN
 from infogan.algos.infogan_trainer import InfoGANTrainer
 from infogan.misc.utils import mkdir_p
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     root_checkpoint_dir = "ckt/heart"
     batch_size = 128
     updates_per_epoch = 100
-    max_epoch = 50
+    max_epoch = 500
 
     exp_name = "heart_%s" % timestamp
 
@@ -31,15 +31,33 @@ if __name__ == "__main__":
     mkdir_p(log_dir)
     mkdir_p(checkpoint_dir)
 
-    dataset = MnistDataset()
+    #DATASET NEEDS TO GET THE TRAIN SPLIT RIGHT
+    #BE CAREFUL OF THIS. NOT TRUE. JUST NEED NEXT BATCH WORKING
+    #WHAT DOES INVERSE TRANSFORM DO?
+    #SWEET. ALL OF THIS LOOKS GOOD.
+    dataset = HeartDataset()
 
+
+    #THESE DEFINITELY NEED TO BE CHANGED
+    #
+    # latent_spec = [
+    #     (Uniform(62), False),
+    #     (Categorical(10), True),
+    #     (Uniform(1, fix_std=True), True),
+    #     (Uniform(1, fix_std=True), True),
+    # ]
+    #SAME LATENT SPEC AS REPORTED FOR FACES
     latent_spec = [
-        (Uniform(62), False),
-        (Categorical(10), True),
+        (Uniform(128), False),
         (Uniform(1, fix_std=True), True),
         (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True)
     ]
 
+    #EVERYTHING SEEMS FINE. NETWORK ARCHITECTURE SHOULD
+    #BE CHANGED.
     model = RegularizedGAN(
         output_dist=MeanBernoulli(dataset.image_dim),
         latent_spec=latent_spec,
@@ -48,6 +66,10 @@ if __name__ == "__main__":
         network_type="heart",
     )
 
+    #EVERYTHING SEEMS OKAY HERE
+    #JUST NEED TO MAKE SURE NEXT_BATCH
+    #IS READY TO GO
+    #LEARNING RATES MIGHT NEED TO CHANGE
     algo = InfoGANTrainer(
         model=model,
         dataset=dataset,
@@ -57,9 +79,9 @@ if __name__ == "__main__":
         checkpoint_dir=checkpoint_dir,
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
-        info_reg_coeff=1.0,
-        generator_learning_rate=1e-3,
-        discriminator_learning_rate=2e-4,
+        info_reg_coeff=0.1,#1.0, RECAPUTULATE AZIMUTH FACE TEST
+        generator_learning_rate=5e-4,#1e-3,
+        discriminator_learning_rate=2e-4#2e-4,
     )
 
     algo.train()

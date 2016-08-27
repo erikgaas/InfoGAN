@@ -41,6 +41,7 @@ class RegularizedGAN(object):
                      fc_batch_norm().
                      apply(leaky_rectify))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
+
                 self.encoder_template = \
                     (shared_template.
                      custom_fully_connected(128).
@@ -49,6 +50,7 @@ class RegularizedGAN(object):
                      custom_fully_connected(self.reg_latent_dist.dist_flat_dim))
 
             with tf.variable_scope("g_net"):
+                #SOMEWHAT CONSISTENT. MIGHT CHANGE
                 self.generator_template = \
                     (pt.template("input").
                      custom_fully_connected(1024).
@@ -63,20 +65,26 @@ class RegularizedGAN(object):
                      apply(tf.nn.relu).
                      custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4).
                      flatten())
+
+
+
+
+        #HEART!!!
         elif network_type == 'heart':
             with tf.variable_scope("d_net"):
                 shared_template = \
                     (pt.template("input").
-                     reshape([-1] + list(image_shape)).
-                     custom_conv2d(64, k_h=4, k_w=4).
+                     custom_conv2d(64, k_h=4, k_w=4, stride=2).
                      apply(leaky_rectify).
-                     custom_conv2d(128, k_h=4, k_w=4).
+                     custom_conv2d(128, k_h=4, k_w=4, stride=2).
                      conv_batch_norm().
                      apply(leaky_rectify).
                      custom_fully_connected(1024).
                      fc_batch_norm().
                      apply(leaky_rectify))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
+                #THIS ENCODER DOESNT SEEM CONISTENT WITH FACES. THAT'S OKAY. WILL 
+                #TRY ANYWAY.
                 self.encoder_template = \
                     (shared_template.
                      custom_fully_connected(128).
@@ -94,10 +102,11 @@ class RegularizedGAN(object):
                      fc_batch_norm().
                      apply(tf.nn.relu).
                      reshape([-1, image_size / 4, image_size / 4, 128]).
-                     custom_deconv2d([0, image_size / 2, image_size / 2, 64], k_h=4, k_w=4).
+                     custom_deconv2d([0, image_size / 2, image_size / 2, 64], k_h=4, k_w=4, stride=2).
                      conv_batch_norm().
                      apply(tf.nn.relu).
-                     custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4).
+                     #THIS CONV APPEARS TO BE EXTRA. WILL KEEP ANYWAY
+                     custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4, stride=2).
                      flatten())
         else:
             raise NotImplementedError
