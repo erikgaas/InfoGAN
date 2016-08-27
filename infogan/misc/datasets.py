@@ -110,5 +110,5 @@ class HeartDataset(object):
     def transform(self, data):
         return data
 
-    def inverse_trainsform(self, data):
+    def inverse_transform(self, data):
         return data
