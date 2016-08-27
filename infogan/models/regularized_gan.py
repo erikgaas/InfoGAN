@@ -74,9 +74,9 @@ class RegularizedGAN(object):
             with tf.variable_scope("d_net"):
                 shared_template = \
                     (pt.template("input").
-                     custom_conv2d(64, k_h=4, k_w=4, stride=2).
+                     custom_conv2d(64, k_h=4, k_w=4).
                      apply(leaky_rectify).
-                     custom_conv2d(128, k_h=4, k_w=4, stride=2).
+                     custom_conv2d(128, k_h=4, k_w=4).
                      conv_batch_norm().
                      apply(leaky_rectify).
                      custom_fully_connected(1024).
@@ -102,11 +102,11 @@ class RegularizedGAN(object):
                      fc_batch_norm().
                      apply(tf.nn.relu).
                      reshape([-1, image_size / 4, image_size / 4, 128]).
-                     custom_deconv2d([0, image_size / 2, image_size / 2, 64], k_h=4, k_w=4, stride=2).
+                     custom_deconv2d([0, image_size / 2, image_size / 2, 64], k_h=4, k_w=4).
                      conv_batch_norm().
                      apply(tf.nn.relu).
                      #THIS CONV APPEARS TO BE EXTRA. WILL KEEP ANYWAY
-                     custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4, stride=2).
+                     custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4).
                      flatten())
         else:
             raise NotImplementedError
