@@ -100,7 +100,7 @@ class HeartDataset(object):
         # np.random.seed(0)
         # self.supervised_train = Dataset(self.train)
 
-        self.imge_dim = 128 * 128
+        self.image_dim = 128 * 128
         self.image_shape = (128, 128, 1)
 
         self.train = Dataset(dataset)
