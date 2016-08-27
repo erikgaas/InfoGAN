@@ -1,0 +1,13 @@
+#!/bin/bash -l
+#PBS -l walltime=24:00:00,nodes=1:ppn=24:gpus=2,mem=62gb -q k40
+#PBS -m abe
+#PBS -M gaas0012@umn.edu
+#PBS -N info_heart
+#PBS -o /home/iaizzop/gaas0012/InfoGAN/nn_output.txt
+#PBS -e /home/iaizzop/gaas0012/InfoGAN/nn_error.txt
+shopt -s expand_aliases
+source /home/iaizzop/gaas0012/.profile
+cd /home/iaizzop/gaas0012/InfoGAN
+source activate nn_learn27_gpu
+PYTHONPATH='.' nn_learn launchers/run_heart_exp.py
+
