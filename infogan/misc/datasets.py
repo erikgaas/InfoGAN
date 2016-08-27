@@ -85,3 +85,23 @@ class MnistDataset(object):
 
     def inverse_transform(self, data):
         return data
+
+class HeartDataset(object):
+    def __init__(self):
+        data_directory = "Heart"
+
+        dataset = GET_HEART_DATA
+        self.train, self.validation, self.test = dataset.train_test_split....
+
+        rnd_state = np.random.get_state()
+        np.random.seed(0)
+        sself.supervised_train = Dataset(self.train)
+
+        self.imge_dim = 128 * 128
+        self.image_dim = (128, 128, 1)
+
+    def transform(self, data):
+        return data
+
+    def inverse_trainsform(self, data):
+        return data
