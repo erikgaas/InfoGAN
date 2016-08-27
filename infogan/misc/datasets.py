@@ -53,9 +53,6 @@ class Dataset(object):
             assert batch_size <= self._num_examples
         end = self._index_in_epoch
         if self._labels is None:
-            print('Returned batch size.')
-            print(self._images[start:end].shape)
-            sys.exit(0)
             return self._images[start:end], None
         else:
             return self._images[start:end], self._labels[start:end]
@@ -105,8 +102,8 @@ class HeartDataset(object):
         # np.random.seed(0)
         # self.supervised_train = Dataset(self.train)
 
-        self.image_dim = 128 * 128
-        self.image_shape = (128, 128, 1)
+        self.image_dim = 120 * 120
+        self.image_shape = (120, 120, 1)
 
         self.train = Dataset(dataset)
 

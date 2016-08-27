@@ -74,6 +74,7 @@ class RegularizedGAN(object):
             with tf.variable_scope("d_net"):
                 shared_template = \
                     (pt.template("input").
+                     reshape([-1] + list(image_shape)).
                      custom_conv2d(64, k_h=4, k_w=4).
                      apply(leaky_rectify).
                      custom_conv2d(128, k_h=4, k_w=4).
