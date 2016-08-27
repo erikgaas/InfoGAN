@@ -45,7 +45,7 @@ class InfoGANTrainer(object):
         self.log_vars = []
 
     def init_opt(self):
-        self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, 120,120,1]#self.dataset.image_dim])
+        self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, 120,120,1])#self.dataset.image_dim])
 
         with pt.defaults_scope(phase=pt.Phase.train):
             z_var = self.model.latent_dist.sample_prior(self.batch_size)
