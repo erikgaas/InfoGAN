@@ -95,7 +95,7 @@ class HeartDataset(object):
     def __init__(self):
         data_directory = "Heart"
 
-        dataset = np.load('/home/iaizzop/gaas0012/InfoGAN/all_pics.npy')
+        dataset = np.load('/home/iaizzop/gaas0012/Thesis_Projects/InfoGAN/all_pics.npy')
         #self.train, self.validation, self.test = dataset.train_test_split....
 
         # rnd_state = np.random.get_state()
