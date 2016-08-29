@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     root_log_dir = "logs/heart"
     root_checkpoint_dir = "ckt/heart"
-    batch_size = 128
+    batch_size = 256
     updates_per_epoch = 100
     max_epoch = 500
 
